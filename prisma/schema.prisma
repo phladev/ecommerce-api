@@ -23,7 +23,7 @@ model User {
   password String
   name     String
 
-  orders  Order  @relation(fields: [orderId], references: [id])
+  orders  Order[]
   orderId String
 }
 
@@ -31,9 +31,10 @@ model Order {
   id        String   @id @default(uuid())
   createdAt DateTime @default(now())
 
-  products   Products @relation(fields: [productsId], references: [id])
+  products   Products[]
   productsId String
-  User       User[]
+  userId     String
+  User       User       @relation(fields: [userId], references: [id])
 }
 
 model Products {
@@ -44,6 +45,7 @@ model Products {
   discoutPercentage Int
   imageUrl          String
   Description       String
+  productsId        String
 
-  order Order[]
+  order Order @relation(fields: [productsId], references: [id])
 }
