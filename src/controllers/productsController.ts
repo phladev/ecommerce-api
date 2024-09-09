@@ -1,5 +1,5 @@
 import { Request, Response } from 'express'
-import { productSchema } from '../schemas/productSchema'
+import { deleteProductSchema, productSchema } from '../schemas/productSchema'
 import { db } from '../lib/prisma'
 
 
@@ -32,6 +32,31 @@ export const getProducts = async(_req: Request, res: Response) => {
 
     return res.status(200).json(products)
 
+  } catch (error) {
+    if(error instanceof Error)
+    res.status(500).json({ message: error.message })
+  }
+}
+
+
+export const deleteProduct = async(req: Request, res: Response) => {
+  try {
+    const parsed = deleteProductSchema.safeParse(req.params)
+
+    if (!parsed.success) {
+      return res.status(400).json({ errors: parsed.error.errors[0].message })
+    }
+
+    const { id } = parsed.data
+
+    const product = await db.product.findUnique({where: {id}})
+
+    if (!product) {
+      return res.status(404).json({ message: "Product not found." });
+    }
+
+    await db.product.delete({where: {id}})
+    return res.status(200).json({ message: "Product deleted successfully." })
   } catch (error) {
     if(error instanceof Error)
     res.status(500).json({ message: error.message })

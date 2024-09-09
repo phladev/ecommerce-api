@@ -10,3 +10,7 @@ export const productSchema = z.object({
     .min(50, 'The description must have at least 50 characters.')
     .max(2000, 'The description must not exceed 2000 characters.'),
 })
+
+export const deleteProductSchema = z.object({
+  id: z.string().min(1, 'Please enter the product id!')
+})
