@@ -23,21 +23,22 @@ model User {
 }
 
 model Order {
-  id        String     @id @default(uuid())
-  createdAt DateTime   @default(now())
+  id        String    @id @default(uuid())
+  createdAt DateTime  @default(now())
   userId    String
-  User      User       @relation(fields: [userId], references: [id])
-  products  Products[]
+  User      User      @relation(fields: [userId], references: [id])
+  products  Product[]
 }
 
-model Products {
-  id                String  @id @default(uuid())
-  name              String
-  quantity          Int
-  price             Decimal @db.Decimal(10, 2)
-  discoutPercentage Int
-  imageUrl          String
-  orderId           String
-  description       String
-  order             Order   @relation(fields: [orderId], references: [id])
+model Product {
+  id                 String  @id @default(uuid())
+  name               String
+  quantity           Int
+  price              Decimal @db.Decimal(10, 2)
+  discountPercentage Int
+  imageUrl           String
+  orderId            String?
+  description        String
+
+  order Order? @relation(fields: [orderId], references: [id])
 }
