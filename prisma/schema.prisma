@@ -1,6 +1,3 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
 generator client {
   provider = "prisma-client-js"
 }
@@ -18,21 +15,19 @@ model Admin {
 }
 
 model User {
-  id       String @id @default(cuid())
-  email    String @unique
+  id       String  @id @default(cuid())
+  email    String  @unique
   password String
   name     String
-
-  orders Order[]
+  orders   Order[]
 }
 
 model Order {
-  id        String   @id @default(uuid())
-  createdAt DateTime @default(now())
-
-  products Products[]
-  userId   String
-  User     User       @relation(fields: [userId], references: [id])
+  id        String     @id @default(uuid())
+  createdAt DateTime   @default(now())
+  userId    String
+  User      User       @relation(fields: [userId], references: [id])
+  products  Products[]
 }
 
 model Products {
@@ -42,9 +37,7 @@ model Products {
   price             Decimal @db.Decimal(10, 2)
   discoutPercentage Int
   imageUrl          String
-  Description       String
-  productsId        String
   orderId           String
-
-  order Order @relation(fields: [orderId], references: [id])
+  description       String
+  order             Order   @relation(fields: [orderId], references: [id])
 }
