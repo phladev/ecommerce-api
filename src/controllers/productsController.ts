@@ -21,3 +21,19 @@ export const registerProduct = async(req: Request, res: Response ) => {
     res.status(500).json({ message: error.message })
   }
 }
+
+export const getProducts = async(_req: Request, res: Response) => {
+  try {
+    const products = await db.product.findMany()
+
+    if(!products || products.length === 0) {
+      return res.status(404).json({ message: "No products found." })
+    }
+
+    return res.status(200).json(products)
+
+  } catch (error) {
+    if(error instanceof Error)
+    res.status(500).json({ message: error.message })
+  }
+}
