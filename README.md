@@ -69,9 +69,9 @@ Para instalá-lo em sua máquina faça os comandos a seguir:
 #### Atenção
 
 É necessário ter as seguintes variáveis de ambiente: 
-  - *DATABASE_URL: Url do banco de dados
-  - *JWT_SECRET: JWT secret
-  - *PORT(Opcional): porta para rodar a aplicação
+  - DATABASE_URL: Url do banco de dados
+  - JWT_SECRET: JWT secret
+  - PORT(Opcional): porta para rodar a aplicação
 
 ## Contribuições
 
