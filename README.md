@@ -44,7 +44,7 @@ Esta é uma API em desenvolvimento para um ecommerce. A API suporta funcionalida
 
 - **Rotas de Pedidos**
   - `GET /api/admin/orders`: Lista todos os pedidos com paginação.
-  - `GET /api/admin/orders`: Lista os pedidos de um usuário específico.
+  - `GET /api/orders`: Lista os pedidos de um usuário específico.
   - `POST /api/orders`: Cria um novo pedido.
 
 - **Autenticação ADM**
