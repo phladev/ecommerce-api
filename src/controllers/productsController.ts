@@ -22,21 +22,37 @@ export const registerProduct = async(req: Request, res: Response ) => {
   }
 }
 
-export const getProducts = async(_req: Request, res: Response) => {
+export const getProducts = async (req: Request, res: Response) => {
   try {
-    const products = await db.product.findMany()
+    const { page = 1, limit = 10 } = req.query;
+    
+    const skip = (Number(page) - 1) * Number(limit);
+    const take = Number(limit);
 
-    if(!products || products.length === 0) {
-      return res.status(404).json({ message: "No products found." })
+    const products = await db.product.findMany({
+      skip,
+      take,
+    });
+
+    const totalProducts = await db.product.count();
+    const totalPages = Math.ceil(totalProducts / Number(limit));
+
+    if (!products || products.length === 0) {
+      return res.status(404).json({ message: "No products found." });
     }
 
-    return res.status(200).json(products)
-
+    return res.status(200).json({
+      products,
+      currentPage: Number(page),
+      totalPages,
+      totalProducts,
+    });
   } catch (error) {
-    if(error instanceof Error)
-    res.status(500).json({ message: error.message })
+    if (error instanceof Error) {
+      res.status(500).json({ message: error.message });
+    }
   }
-}
+};
 
 export const updateProduct = async(req: Request, res: Response) => {
   try {
