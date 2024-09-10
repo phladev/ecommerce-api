@@ -91,7 +91,7 @@ export const getOrders = async (req: Request, res: Response) => {
 
 export const getUserOrders = async (req: Request, res: Response) => {
   try {
-    const parsed = getUserOrderSchema.safeParse(req.body)
+    const parsed = getUserOrderSchema.safeParse(req.params)
 
     if (!parsed.success) {
       return res.status(400).json({ errors: parsed.error.errors[0].message })

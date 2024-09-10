@@ -13,7 +13,7 @@ router.post('/login', loginUser)
 
 //Shop
 router.get('/products', getProducts)
-router.get('/orders', authMiddleware, getUserOrders)
+router.get('/orders/:userId', authMiddleware, getUserOrders)
 router.post('/orders', authMiddleware, createOrder)
 
 export default router
