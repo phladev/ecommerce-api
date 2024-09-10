@@ -2,7 +2,7 @@ import { Router } from 'express'
 import { loginUser, registerUser } from '../controllers/authController'
 import { getProducts } from '../controllers/productsController'
 import { authMiddleware } from '../middlewares/authMiddleware'
-import { createOrder } from '../controllers/orderController'
+import { createOrder, getUserOrders } from '../controllers/orderController'
 
 const router = Router()
 
@@ -13,6 +13,7 @@ router.post('/login', loginUser)
 
 //Shop
 router.get('/products', getProducts)
+router.get('/orders', authMiddleware, getUserOrders)
 router.post('/orders', authMiddleware, createOrder)
 
 export default router
