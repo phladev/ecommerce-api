@@ -74,7 +74,10 @@ Esta é uma API em desenvolvimento para um ecommerce. A API suporta funcionalida
    -   `page`: Número da página para paginação (padrão é `1`).
    -   `limit`: Número máximo de itens por página (padrão é `10`).
 
-2. **`GET /api/orders`**: Retorna uma lista de pedidos do usuário logado. 
+2. **`GET /api/orders`**: Retorna uma lista de pedidos do usuário logado, com suporte a paginação. Os parâmetros de query aceitos são:
+
+   -   `page`: Número da página para paginação (padrão é `1`).
+   -   `limit`: Número máximo de itens por página (padrão é `10`). 
    
 3. **`POST /api/orders`**: Cria um novo pedido. O corpo da requisição deve ser um JSON contendo:
 
