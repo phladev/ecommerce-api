@@ -14,7 +14,7 @@ router.post('/login', loginAdmin)
 
 //Product
 router.post('/products', authMiddlewareADM, registerProduct)
-router.put('/products', authMiddlewareADM, updateProduct)
+router.put('/products/:id', authMiddlewareADM, updateProduct)
 router.delete('/products/:id', authMiddlewareADM, deleteProduct)
 
 //Order

@@ -1,5 +1,5 @@
 import { Request, Response } from 'express'
-import { deleteProductSchema, editProductSchema, productSchema } from '../schemas/productSchema'
+import {  editProductSchema, productIdSchema, productSchema } from '../schemas/productSchema'
 import { db } from '../lib/prisma'
 
 
@@ -129,12 +129,19 @@ export const getProducts = async (req: Request, res: Response) => {
 export const updateProduct = async(req: Request, res: Response) => {
   try {
     const parsed = editProductSchema.safeParse(req.body)
+    const parsedParams = productIdSchema.safeParse(req.params)
+
+    if (!parsedParams.success) {
+      return res.status(400).json({ errors: parsedParams.error.errors[0].message })
+    }
+
+    const { id } = parsedParams.data
 
     if (!parsed.success) {
       return res.status(400).json({ errors: parsed.error.errors[0].message })
     }
 
-    const { id, name, price, imageUrl, description, discountPercentage, quantity, categories } = parsed.data
+    const { name, price, imageUrl, description, discountPercentage, quantity, categories } = parsed.data
 
     const existingCategories = await db.category.findMany({
       where: { name: { in: categories } },
@@ -189,7 +196,7 @@ export const updateProduct = async(req: Request, res: Response) => {
 
 export const deleteProduct = async(req: Request, res: Response) => {
   try {
-    const parsed = deleteProductSchema.safeParse(req.params)
+    const parsed = productIdSchema.safeParse(req.params)
 
     if (!parsed.success) {
       return res.status(400).json({ errors: parsed.error.errors[0].message })

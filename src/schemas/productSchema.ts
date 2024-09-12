@@ -13,7 +13,6 @@ export const productSchema = z.object({
 })
 
 export const editProductSchema = z.object({
-  id: z.string().min(1, 'Please enter the product id!'),
   name: z.string().min(1, 'Please enter a name to your product!'),
   quantity: z.number().positive().min(1, 'Please enter the quantity of your product!'),
   price: z.number().positive().min(0.01, 'Please enter a price to your product!'),
@@ -25,6 +24,6 @@ export const editProductSchema = z.object({
   categories: z.array(z.string()).nonempty('Please provide at least one category for the product!')
 })
 
-export const deleteProductSchema = z.object({
+export const productIdSchema = z.object({
   id: z.string().min(1, 'Please enter the product id!')
 })
