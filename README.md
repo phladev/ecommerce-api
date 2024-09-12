@@ -45,23 +45,23 @@ Esta é uma API em desenvolvimento para um ecommerce. A API suporta funcionalida
 
 1. **`GET /api/products`**: Esta rota lista todos os produtos da API. A resposta é paginada e permite o uso de filtros opcionais. Os parâmetros de query aceitos são:
 
--   `page`: Número da página para paginação (padrão é `1`).
--   `limit`: Número máximo de itens por página (padrão é `10`).
--   `name`: Filtra produtos que contenham um determinado nome.
--   `minPrice`: Filtra produtos com preço maior ou igual ao valor especificado.
--   `maxPrice`: Filtra produtos com preço menor ou igual ao valor especificado.
--   `category`: Filtra produtos por uma categoria específica.
--   `hasDiscount`: Filtra produtos que possuem desconto, aceitando valores `true` ou `false`.
+   -   `page`: Número da página para paginação (padrão é `1`).
+   -   `limit`: Número máximo de itens por página (padrão é `10`).
+   -   `name`: Filtra produtos que contenham um determinado nome.
+   -   `minPrice`: Filtra produtos com preço maior ou igual ao valor especificado.
+   -   `maxPrice`: Filtra produtos com preço menor ou igual ao valor especificado.
+   -   `category`: Filtra produtos por uma categoria específica.
+   -   `hasDiscount`: Filtra produtos que possuem desconto, aceitando valores `true` ou `false`.
 
 2. **`POST /api/admin/products`**: Utilizada para criar um novo produto. A requisição deve conter um corpo JSON com os seguintes campos:
 
--   `name`: Nome do produto.
--   `price`: Preço do produto.
--   `description`: Descrição do produto.
--   `discountPercentage`: Percentual de desconto aplicado ao produto.
--   `quantity`: Quantidade disponível em estoque.
--   `imageUrl`: URL da imagem do produto.
--   `categories`: Lista de nomes de categorias às quais o produto pertence.
+   -   `name`: Nome do produto.
+   -   `price`: Preço do produto.
+   -   `description`: Descrição do produto.
+   -   `discountPercentage`: Percentual de desconto aplicado ao produto.
+   -   `quantity`: Quantidade disponível em estoque.
+   -   `imageUrl`: URL da imagem do produto.
+   -   `categories`: Um array de nomes de categorias às quais o produto pertence.
 
 3. **`PUT /api/admin/products/:id`**: Atualiza um produto existente. O parâmetro `id` na URL refere-se ao ID do produto a ser atualizado. O corpo da requisição deve ser um JSON contendo os campos que deseja atualizar, como `name`, `price`, `description`, `discountPercentage`, `quantity`, `imageUrl` e `categories`.
 
@@ -71,15 +71,15 @@ Esta é uma API em desenvolvimento para um ecommerce. A API suporta funcionalida
 
 1. **`GET /api/admin/orders`**: Esta rota lista todos os pedidos existentes, com suporte a paginação. Os parâmetros de query aceitos são:
 
--   `page`: Número da página para paginação (padrão é `1`).
--   `limit`: Número máximo de itens por página (padrão é `10`).
+   -   `page`: Número da página para paginação (padrão é `1`).
+   -   `limit`: Número máximo de itens por página (padrão é `10`).
 
 2. **`GET /api/orders/:userId`**: Retorna uma lista de pedidos de um usuário específico. O parâmetro `userId` na URL representa o ID do usuário cujos pedidos serão retornados.
    
 3. **`POST /api/orders`**: Cria um novo pedido. O corpo da requisição deve ser um JSON contendo:
 
--   `userId`: ID do usuário que está fazendo o pedido.
--   `productIds`: Um array de objetos contendo `productId` (ID do produto).
+   -   `userId`: ID do usuário que está fazendo o pedido.
+   -   `productIds`: Um array de objetos contendo `productId` (ID do produto).
 
 ## Rotas de Produtos
 
@@ -93,15 +93,15 @@ Esta é uma API em desenvolvimento para um ecommerce. A API suporta funcionalida
 
 1. **`POST /api/admin/register`**: Registra um novo administrador na plataforma. A requisição deve conter um JSON com os seguintes campos:
 
--   `email`: Email do administrador.
--   `password`: Senha do administrador.
--   `name`: Nome do administrador.
+   -   `email`: Email do administrador.
+   -   `password`: Senha do administrador.
+   -   `name`: Nome do administrador.
 
 2. **`POST /api/register`**: Registra um novo usuário. O corpo da requisição deve conter um JSON com os seguintes campos:
 
--   `email`: Email do usuário.
--   `password`: Senha do usuário.
--   `name`: Nome do usuário.
+   -   `email`: Email do usuário.
+   -   `password`: Senha do usuário.
+   -   `name`: Nome do usuário.
 
 3. **`POST /api/admin/login`**: Realiza o login de um administrador e retorna um token JWT. A requisição deve incluir um JSON com `email` e `password`.
 
