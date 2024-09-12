@@ -1,7 +1,13 @@
-import { Request, Response } from "express";
-import { db } from "../lib/prisma";
-import { getUserOrderSchema, orderSchema } from "../schemas/orderSchema";
+import { Request, Response } from "express"
+import { db } from "../lib/prisma"
+import { orderSchema } from "../schemas/orderSchema"
 
+
+interface UserRequest extends Request {
+  user?: {
+    id: string;
+  };
+}
 
 export const createOrder = async (req: Request, res: Response) => {
   try {
@@ -89,15 +95,13 @@ export const getOrders = async (req: Request, res: Response) => {
   }
 }
 
-export const getUserOrders = async (req: Request, res: Response) => {
+export const getUserOrders = async (req: UserRequest, res: Response) => {
   try {
-    const parsed = getUserOrderSchema.safeParse(req.params)
-
-    if (!parsed.success) {
-      return res.status(400).json({ errors: parsed.error.errors[0].message })
+    if(!req.user) {
+      return res.status(401).json({ message: "Unauthorized access" })
     }
 
-    const { userId } = parsed.data
+    const userId = req.user.id
 
     const { page = 1, limit = 10 } = req.query
 
