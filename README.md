@@ -67,21 +67,21 @@ Esta é uma API em desenvolvimento para um ecommerce. A API suporta funcionalida
 
 4. **`DELETE /api/admin/products/:id`**: Remove um produto específico. O parâmetro `id` na URL indica o ID do produto que será removido.
 
-## Rotas de Produtos
+## Rotas de Pedidos
 
 1. **`GET /api/admin/orders`**: Esta rota lista todos os pedidos existentes, com suporte a paginação. Os parâmetros de query aceitos são:
 
    -   `page`: Número da página para paginação (padrão é `1`).
    -   `limit`: Número máximo de itens por página (padrão é `10`).
 
-2. **`GET /api/orders/:userId`**: Retorna uma lista de pedidos de um usuário específico. O parâmetro `userId` na URL representa o ID do usuário cujos pedidos serão retornados.
+2. **`GET /api/orders`**: Retorna uma lista de pedidos do usuário logado. 
    
 3. **`POST /api/orders`**: Cria um novo pedido. O corpo da requisição deve ser um JSON contendo:
 
    -   `userId`: ID do usuário que está fazendo o pedido.
    -   `productIds`: Um array de objetos contendo `productId` (ID do produto).
 
-## Rotas de Produtos
+## Rotas de Categorias
 
 1. **`GET /api/categories`**: Lista todas as categorias existentes.
 
