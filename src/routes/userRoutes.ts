@@ -3,6 +3,7 @@ import { loginUser, registerUser } from '../controllers/authController'
 import { getProducts } from '../controllers/productsController'
 import { authMiddleware } from '../middlewares/authMiddleware'
 import { createOrder, getUserOrders } from '../controllers/orderController'
+import { getCategories } from '../controllers/categoryController'
 
 const router = Router()
 
@@ -14,6 +15,8 @@ router.post('/login', loginUser)
 //Shop
 router.get('/products', getProducts)
 router.get('/orders/:userId', authMiddleware, getUserOrders)
+router.get('/categories', getCategories)
+
 router.post('/orders', authMiddleware, createOrder)
 
 export default router
