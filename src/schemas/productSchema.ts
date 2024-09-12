@@ -9,6 +9,7 @@ export const productSchema = z.object({
   description: z.string()
     .min(50, 'The description must have at least 50 characters.')
     .max(2000, 'The description must not exceed 2000 characters.'),
+  categories: z.array(z.string()).nonempty('Please provide at least one category for the product!')
 })
 
 export const editProductSchema = z.object({
@@ -21,6 +22,7 @@ export const editProductSchema = z.object({
   description: z.string()
     .min(50, 'The description must have at least 50 characters.')
     .max(2000, 'The description must not exceed 2000 characters.'),
+  categories: z.array(z.string()).nonempty('Please provide at least one category for the product!')
 })
 
 export const deleteProductSchema = z.object({
