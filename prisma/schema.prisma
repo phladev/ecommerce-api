@@ -30,13 +30,20 @@ model Order {
   products  Product[] @relation("OrderProducts")
 }
 
+model Category {
+  id       String    @id @default(cuid())
+  name     String    @unique
+  products Product[] @relation("ProductCategories")
+}
+
 model Product {
-  id                 String  @id @default(uuid())
+  id                 String     @id @default(uuid())
   name               String
   quantity           Int
-  price              Decimal @db.Decimal(10, 2)
+  price              Decimal    @db.Decimal(10, 2)
   discountPercentage Int
   imageUrl           String
   description        String
-  orders             Order[] @relation("OrderProducts")
+  orders             Order[]    @relation("OrderProducts")
+  categories         Category[] @relation("ProductCategories")
 }
