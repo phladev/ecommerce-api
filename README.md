@@ -26,10 +26,10 @@ Esta é uma API em desenvolvimento para um ecommerce. A API suporta funcionalida
 - **Paginação**: Suporte a paginação nas rotas de listagem de pedidos e produtos.
 - **Validação de Dados**: Validação de dados de entrada usando Zod.
 - **Busca Avançada de Produtos**: Implementação de filtros e busca avançada para produtos.
+- **Gerenciamento de Contas de Administrador**: Funcionalidades adicionais para administradores, como visualização e gestão de usuários.
 
 ### Features Futuras
 
-- **Gerenciamento de Contas de Administrador**: Funcionalidades adicionais para administradores, como visualização e gestão de usuários.
 - **Integração de Pagamento**: Adição de funcionalidade para processar pagamentos.
 - **Melhorias na Segurança**: Implementação de medidas adicionais de segurança, como rate limiting e proteção contra CSRF.
 - **Notificações e Email**: Implementação de notificações por email para confirmações de pedidos e atualizações.
