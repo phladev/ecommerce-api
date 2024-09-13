@@ -26,10 +26,10 @@ Esta é uma API em desenvolvimento para um ecommerce. A API suporta funcionalida
 - **Paginação**: Suporte a paginação nas rotas de listagem de pedidos e produtos.
 - **Validação de Dados**: Validação de dados de entrada usando Zod.
 - **Busca Avançada de Produtos**: Implementação de filtros e busca avançada para produtos.
+- **Gerenciamento de Contas de Administrador**: Funcionalidades adicionais para administradores, como visualização e gestão de usuários.
 
 ### Features Futuras
 
-- **Gerenciamento de Contas de Administrador**: Funcionalidades adicionais para administradores, como visualização e gestão de usuários.
 - **Integração de Pagamento**: Adição de funcionalidade para processar pagamentos.
 - **Melhorias na Segurança**: Implementação de medidas adicionais de segurança, como rate limiting e proteção contra CSRF.
 - **Notificações e Email**: Implementação de notificações por email para confirmações de pedidos e atualizações.
@@ -74,7 +74,10 @@ Esta é uma API em desenvolvimento para um ecommerce. A API suporta funcionalida
    -   `page`: Número da página para paginação (padrão é `1`).
    -   `limit`: Número máximo de itens por página (padrão é `10`).
 
-2. **`GET /api/orders`**: Retorna uma lista de pedidos do usuário logado. 
+2. **`GET /api/orders`**: Retorna uma lista de pedidos do usuário logado, com suporte a paginação. Os parâmetros de query aceitos são:
+
+   -   `page`: Número da página para paginação (padrão é `1`).
+   -   `limit`: Número máximo de itens por página (padrão é `10`). 
    
 3. **`POST /api/orders`**: Cria um novo pedido. O corpo da requisição deve ser um JSON contendo:
 
