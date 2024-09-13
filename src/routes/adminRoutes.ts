@@ -4,6 +4,7 @@ import { deleteProduct, registerProduct, updateProduct } from '../controllers/pr
 import { authMiddlewareADM } from '../middlewares/authMiddleware'
 import { getOrders } from '../controllers/orderController'
 import { deleteCategory, registerCategory } from '../controllers/categoryController'
+import { getUsers } from '../controllers/userInfoController'
 
 const router = Router()
 
@@ -11,6 +12,9 @@ const router = Router()
 //Auth
 router.post('/register', registerAdmin)
 router.post('/login', loginAdmin)
+
+//User
+router.get('/users', authMiddlewareADM, getUsers)
 
 //Product
 router.post('/products', authMiddlewareADM, registerProduct)
