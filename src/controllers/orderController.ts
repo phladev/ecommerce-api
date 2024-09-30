@@ -2,23 +2,26 @@ import { Request, Response } from "express"
 import { db } from "../lib/prisma"
 import { orderSchema } from "../schemas/orderSchema"
 
-
 interface UserRequest extends Request {
   user?: {
     id: string;
-  };
+  }
+}
+
+interface OrderItem {
+  productId: string;
+  quantity: number;
 }
 
 export const createOrder = async (req: Request, res: Response) => {
   try {
-
     const parsed = orderSchema.safeParse(req.body)
 
     if (!parsed.success) {
       return res.status(400).json({ errors: parsed.error.errors[0].message })
     }
 
-    const { userId, productIds } = parsed.data
+    const { userId, items } = parsed.data
 
     const userExists = await db.user.findUnique({
       where: { id: userId },
@@ -28,6 +31,8 @@ export const createOrder = async (req: Request, res: Response) => {
       return res.status(404).json({ message: "User not found." })
     }
 
+    // Verify if the product exists
+    const productIds = items.map((item: OrderItem) => item.productId)
     const products = await db.product.findMany({
       where: {
         id: { in: productIds },
@@ -37,19 +42,50 @@ export const createOrder = async (req: Request, res: Response) => {
     if (products.length !== productIds.length) {
       return res.status(404).json({ message: "Some products not found." })
     }
+    
+    // Verify if the quantity of each product is available in the storage
+    let totalPrice = 0
+    for (const item of items) {
+      const product = products.find((p) => p.id === item.productId)
+      
+      if (!product) {
+        return res.status(404).json({ message: `Product with ID ${item.productId} not found.` })
+      }
+      
+      if (product.quantity < item.quantity) {
+        return res.status(400).json({ message: `Insufficient stock for product ${product.name}.` })
+      }
+
+      const discountAmount = (product.price.toNumber() * item.quantity) * (product.discountPercentage / 100)
+      const priceAfterDiscount = (product.price.toNumber() * item.quantity) - discountAmount
+      totalPrice += priceAfterDiscount
+    }
+    
 
     const order = await db.order.create({
       data: {
         userId,
-        products: {
-          connect: productIds.map((id: string) => ({ id })),
+        totalPrice,
+        orderItems: {
+          create: items.map((item: OrderItem) => ({
+            productId: item.productId,
+            quantity: item.quantity,
+          })),
         },
       },
       include: {
-        products: true,
+        orderItems: { include: { Product: true } },
         User: true,
       },
     })
+
+    // Update the storage
+    for (const item of items) {
+      await db.product.update({
+        where: { id: item.productId },
+        data: { quantity: { decrement: item.quantity } },
+      })
+    }
 
     return res.status(201).json(order)
   } catch (error) {
@@ -70,8 +106,13 @@ export const getOrders = async (req: Request, res: Response) => {
       skip,
       take,
       include: {
-        User: true,
-        products: true,
+        User: {
+          select: {
+            name: true,
+            email: true
+          }
+        },
+        orderItems: { include: { Product: true } },
       },
     })
 
@@ -97,7 +138,7 @@ export const getOrders = async (req: Request, res: Response) => {
 
 export const getUserOrders = async (req: UserRequest, res: Response) => {
   try {
-    if(!req.user) {
+    if (!req.user) {
       return res.status(401).json({ message: "Unauthorized access" })
     }
 
@@ -109,21 +150,21 @@ export const getUserOrders = async (req: UserRequest, res: Response) => {
     const take = Number(limit)
 
     const orders = await db.order.findMany({
-      where: {
-        userId,
-      },
+      where: { userId },
       skip,
       take,
       include: {
-        products: true,
+        orderItems: { include: { Product: {
+          select: {
+            name: true,
+            price: true,
+            discountPercentage: true,
+          }
+        } } },
       },
     })
 
-    const totalOrders = await db.order.count({
-      where: {
-        userId,
-      },
-    })
+    const totalOrders = await db.order.count({ where: { userId } })
     const totalPages = Math.ceil(totalOrders / Number(limit))
 
     if (!orders || orders.length === 0) {
