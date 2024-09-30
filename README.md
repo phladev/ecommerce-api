@@ -36,10 +36,17 @@ Esta é uma API em desenvolvimento para um ecommerce. A API suporta funcionalida
 
 ## Índice de Rotas
 
+- [Rotas de Usuários](#rotas-de-usuários)
 - [Rotas de Produtos](#rotas-de-produtos)
 - [Rotas de Pedidos](#rotas-de-pedidos)
 - [Rotas de Categorias](#rotas-de-categorias)
 - [Autenticação](#autenticação)
+
+## Rotas de Produtos
+1. **`GET /api/admin/users`**: Esta rota lista todos os usuários e seus pedidos, com suporte a paginação. Os parâmetros de query aceitos são:
+   -   `page`: Número da página para paginação (padrão é `1`).
+   -   `limit`: Número máximo de itens por página (padrão é `10`).
+
 
 ## Rotas de Produtos
 
