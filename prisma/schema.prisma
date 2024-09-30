@@ -22,28 +22,37 @@ model User {
   orders   Order[]
 }
 
-model Order {
-  id        String    @id @default(uuid())
-  createdAt DateTime  @default(now())
-  userId    String
-  User      User      @relation(fields: [userId], references: [id])
-  products  Product[] @relation("OrderProducts")
-}
-
 model Category {
   id       String    @id @default(cuid())
   name     String    @unique
   products Product[] @relation("ProductCategories")
 }
 
+model Order {
+  id         String      @id @default(uuid())
+  createdAt  DateTime    @default(now())
+  userId     String
+  User       User        @relation(fields: [userId], references: [id])
+  orderItems OrderItem[]
+}
+
 model Product {
-  id                 String     @id @default(uuid())
+  id                 String      @id @default(uuid())
   name               String
   quantity           Int
-  price              Decimal    @db.Decimal(10, 2)
+  price              Decimal     @db.Decimal(10, 2)
   discountPercentage Int
   imageUrl           String
   description        String
-  orders             Order[]    @relation("OrderProducts")
-  categories         Category[] @relation("ProductCategories")
+  orderItems         OrderItem[]
+  categories         Category[]  @relation("ProductCategories")
+}
+
+model OrderItem {
+  id        String  @id @default(uuid())
+  quantity  Int
+  orderId   String
+  productId String
+  Order     Order   @relation(fields: [orderId], references: [id])
+  Product   Product @relation(fields: [productId], references: [id])
 }
