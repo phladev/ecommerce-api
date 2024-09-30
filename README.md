@@ -89,7 +89,7 @@ Esta é uma API em desenvolvimento para um ecommerce. A API suporta funcionalida
 3. **`POST /api/orders`**: Cria um novo pedido. O corpo da requisição deve ser um JSON contendo:
 
    -   `userId`: ID do usuário que está fazendo o pedido.
-   -   `productIds`: Um array de objetos contendo `productId` (ID do produto).
+   -   `items`: Um array de objetos contendo `productId` (ID do produto) e `quantity` (quantidade desse produtudo para compra).
 
 ## Rotas de Categorias
 
