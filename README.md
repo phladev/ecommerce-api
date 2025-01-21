@@ -31,7 +31,6 @@ Esta é uma API em desenvolvimento para um ecommerce. A API suporta funcionalida
 ### Features Futuras
 
 - **Integração de Pagamento**: Adição de funcionalidade para processar pagamentos.
-- **Melhorias na Segurança**: Implementação de medidas adicionais de segurança, como rate limiting e proteção contra CSRF.
 - **Notificações e Email**: Implementação de notificações por email para confirmações de pedidos e atualizações.
 
 ## Índice de Rotas
